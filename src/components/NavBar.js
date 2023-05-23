@@ -6,8 +6,48 @@ import "bootstrap/dist/js/bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginModal from "./Login";
 
+
 const MyComponent = () => {
+  // Función para obtener el valor de una cookie por su nombre
+  const getCookie = (name) => {
+    const cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].split("=");
+      const cookieName = cookie[0];
+      const cookieValue = cookie[1];
+      if (cookieName === name) {
+        return cookieValue;
+      }
+    }
+    return "";
+  };
+
+  // Función para obtener el nombre de usuario desde un token de autenticación
+  const getUsernameFromToken = (token) => {
+    // Aquí puedes implementar la lógica para extraer el nombre de usuario del token
+    // Por ejemplo, si el token es un JWT (JSON Web Token), puedes decodificarlo y obtener el nombre de usuario de la carga útil (payload) del token.
+    // Sin embargo, la implementación específica dependerá del formato del token que estés utilizando.
+    // A continuación, se muestra un ejemplo básico que asume que el token es simplemente el nombre de usuario.
+    return token;
+  };
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+
   useEffect(() => {
+    // Obtener el token de autenticación de la cookie
+    const token = getCookie("token");
+
+    // Verificar si el token existe y no está vacío
+    if (token && token !== "") {
+      // El usuario ha iniciado sesión
+      setIsLoggedIn(true);
+
+      // Obtener el nombre de usuario desde el token
+      const username = getUsernameFromToken(token);
+      setUsername(username);
+    }
+
     const handleDropdownItemClick = (e) => {
       if (e.target.classList.contains("dropdown-toggle")) {
         e.stopPropagation();
@@ -45,6 +85,26 @@ const MyComponent = () => {
     setShowModal(true);
   };
 
+  const handleLogout = () => {
+    fetch("http://127.0.0.1:8000/logout/", {
+      method: "GET",
+      credentials: "include", // Incluir las cookies en la solicitud
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Eliminar la cookie de autenticación
+          document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+          // Redireccionar a la página de inicio de sesión
+          window.location.href = "/login";
+        } else {
+          console.error("Error al cerrar sesión");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al cerrar sesión", error);
+      });
+  };
   return (
     <html>
       <link rel="stylesheet" href="css/style.css" />
@@ -154,34 +214,20 @@ const MyComponent = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/login">
-                    Login
-                  </a>
+                  {isLoggedIn ? (
+                    <>
+                      <a className="nav-link" href="#"  onClick={handleLogout}>
+                        Logout
+                      </a>
+                      <span className="nav-link">{username}</span>
+                    </>
+                  ) : (
+                    <a className="nav-link" href="/login">
+                      Login
+                    </a>
+                  )}
                 </li>
               </ul>
-              {/* <li className="nav-item">
-                  <button className="nav-link" onClick={handleOpenModal}>
-                    Iniciar sesión
-                  </button>
-                </li>
-              </ul>
-              <Modal
-                show={showModal}
-                onHide={handleCloseModal}
-                style={{ zIndex: 9999 }}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>Iniciar sesión</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <LoginModal />
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseModal}>
-                    Cerrar
-                  </Button>
-                </Modal.Footer>
-              </Modal> */}
             </div>
           </div>
         </nav>

@@ -45,7 +45,7 @@ function Inicio() {
                       <a href="/login">Iniciar sesión</a>
                     </div>
                     <div className="contact_bt">
-                      <a href="#">No se que poner aqui</a>
+                      <a href="/registrar">Registrar un paciente</a>
                     </div>
                   </div>
                 </div>

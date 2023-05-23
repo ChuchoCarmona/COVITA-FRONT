@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import ReactDOM from "react-dom";
+import { AuthContext, isLoggedIn } from "./AuthContext";
 
 function Inicio() {
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+    
   };
 
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     
       <body>
@@ -40,10 +43,22 @@ function Inicio() {
                   <p className="banner_text">
                     Sistema para la deteccion de COVID-19 en imagenes radiológicas
                   </p>
+                  
                   <div className="btn_main">
+                  {isLoggedIn ? (
+                    <>
                     <div className="more_bt">
-                      <a href="/login">Iniciar sesión</a>
+                      <a href="/login">Hola</a>
                     </div>
+                    </>
+                  ):(
+                    <>
+                    <div className="more_bt">
+                      <a href="/login">Inciar sesion</a>
+                    </div>
+                    </>
+                  )}
+
                     <div className="contact_bt">
                       <a href="/registrar">Registrar un paciente</a>
                     </div>

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import React, { useEffect, useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "popper.js/dist/umd/popper";
 import "bootstrap/dist/js/bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import LoginModal from "./Login";
+import { AuthContext, Logout } from "./AuthContext";
 
 
 const MyComponent = () => {
+  const { Logout } = useContext(AuthContext);
   // Función para obtener el valor de una cookie por su nombre
   const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
@@ -23,12 +23,30 @@ const MyComponent = () => {
   };
 
   // Función para obtener el nombre de usuario desde un token de autenticación
-  const getUsernameFromToken = (token) => {
-    // Aquí puedes implementar la lógica para extraer el nombre de usuario del token
-    // Por ejemplo, si el token es un JWT (JSON Web Token), puedes decodificarlo y obtener el nombre de usuario de la carga útil (payload) del token.
-    // Sin embargo, la implementación específica dependerá del formato del token que estés utilizando.
-    // A continuación, se muestra un ejemplo básico que asume que el token es simplemente el nombre de usuario.
-    return token;
+  const getUsernameFromToken = async (token) => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/get_username/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`, // Pasar el token en el encabezado de autorización
+        },
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const username = "Hola "+ responseData.username;
+
+        // Hacer algo con el nombre de usuario
+        console.log("Nombre de usuario:", username);
+        setUsername(username);
+      } else {
+        // Manejar el caso de error en la solicitud
+        console.log("Error al obtener el nombre de usuario");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,8 +62,7 @@ const MyComponent = () => {
       setIsLoggedIn(true);
 
       // Obtener el nombre de usuario desde el token
-      const username = getUsernameFromToken(token);
-      setUsername(username);
+      getUsernameFromToken(token);
     }
 
     const handleDropdownItemClick = (e) => {
@@ -75,36 +92,13 @@ const MyComponent = () => {
     };
   }, []);
 
-  const [showModal, setShowModal] = useState(false);
+  
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
+//funcion para hacer logout
   const handleLogout = () => {
-    fetch("http://127.0.0.1:8000/logout/", {
-      method: "GET",
-      credentials: "include", // Incluir las cookies en la solicitud
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Eliminar la cookie de autenticación
-          document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-          // Redireccionar a la página de inicio de sesión
-          window.location.href = "/login";
-        } else {
-          console.error("Error al cerrar sesión");
-        }
-      })
-      .catch((error) => {
-        console.error("Error al cerrar sesión", error);
-      });
+    Logout()
   };
+
   return (
     <html>
       <link rel="stylesheet" href="css/style.css" />
@@ -216,16 +210,19 @@ const MyComponent = () => {
                 <li className="nav-item">
                   {isLoggedIn ? (
                     <>
-                      <a className="nav-link" href="#"  onClick={handleLogout}>
-                        Logout
+                      <a className="nav-link" href="#" onClick={handleLogout}>
+                        Logout 
                       </a>
-                      <span className="nav-link">{username}</span>
+                      
                     </>
                   ) : (
                     <a className="nav-link" href="/login">
                       Login
                     </a>
                   )}
+                </li>
+                <li className="nav-item">
+                <a className="nav-link"> {username}</a>
                 </li>
               </ul>
             </div>

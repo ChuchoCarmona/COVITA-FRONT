@@ -1,44 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Form } from "react-bootstrap";
+import { AuthContext, Login } from "./AuthContext";
 
-const Login = () => {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const { Login } = useContext(AuthContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = {
-      username: username,
-      password: password,
-    };
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api_generate_token/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const token = responseData.token;
-
-        // El inicio de sesión fue exitoso, el token está en la respuesta
-        document.cookie = "token=" + token; // Guardar el token en una cookie llamada 'token'
-
-        // Realiza alguna acción adicional, como redirigir al usuario a otra página
-        console.log("Inicio de sesión exitoso");
-      } else {
-        // El inicio de sesión falló, puedes mostrar un mensaje de error al usuario.
-        console.log("Inicio de sesión fallido");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    // Llama a la función Login del contexto y pasa el nombre de usuario y contraseña como parámetros
+    Login(username, password);
   };
+
+
   return (
     <body>
       <div className="contact_section layout_padding">
@@ -76,10 +51,10 @@ const Login = () => {
                         <h1>Te damos la bienvenida</h1>
                       </Form.Label>
                       <Form.Control
-                       type="text"
-                       value={username}
-                       onChange={(e) => setUsername(e.target.value)}
-                       placeholder="Nombre de usuario"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Nombre de usuario"
                       />
                       <br />
                     </Form.Group>
@@ -109,6 +84,7 @@ const Login = () => {
                       Registrar
                     </Button>
                   </Form>
+                  <br />
                 </div>
               </div>
             </div>
@@ -119,4 +95,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

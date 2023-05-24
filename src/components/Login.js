@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Button, Form } from "react-bootstrap";
-import { AuthContext, Login } from "./AuthContext";
+import { AuthContext, Login, isCheck } from "./AuthContext";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -12,7 +12,7 @@ const LoginForm = () => {
     // Llama a la función Login del contexto y pasa el nombre de usuario y contraseña como parámetros
     Login(username, password);
   };
-
+  const { isCheck } = useContext(AuthContext);
 
   return (
     <body>
@@ -68,6 +68,18 @@ const LoginForm = () => {
                       />
                     </Form.Group>
                     <br />
+                    {isCheck ? (
+                      <div className="error-card">
+                        <Form.Label>
+                          <h4>
+                            El nombre de usuario y/o la contraseña no coincide
+                          </h4>
+                        </Form.Label>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                       {/* <Form.Check type="checkbox" label="Recuérdame" /> */}
                     </Form.Group>

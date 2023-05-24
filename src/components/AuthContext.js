@@ -7,6 +7,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   // Variable de estado para indicar si hay un usuario logueado
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
+
+  const setCheck = (value) => {
+    setIsCheck(value);
+  };
+
   const setLoggedIn = (value) => {
     setIsLoggedIn(value);
     localStorage.setItem("isLoggedIn", JSON.stringify(value));
@@ -46,6 +52,7 @@ const Login = async (username, password) => {
       window.location.href = "/";
     } else {
       console.log("Inicio de sesión fallido");
+      setIsCheck(false)
     }
   };
   
@@ -78,7 +85,7 @@ const Login = async (username, password) => {
 
   // Pasa el estado y las funciones a los componentes hijos
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn, Login, Logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn, Login, Logout, isCheck }}>
       {children}
     </AuthContext.Provider>
   );

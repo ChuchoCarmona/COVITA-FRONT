@@ -6,6 +6,7 @@ import BasicExample from "./components/Login";
 import FormExample from "./components/Registro";
 import Paciente from "./components/Paciente";
 import Pokemon from "./components/ConsumoAPI";
+// import ImageAnalyzer from "./components/AutoDiag";
 import { AuthProvider } from "./components/AuthContext";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/registrar" element={<FormExample />} />
           <Route path="/paciente" element={<Paciente />} />
           <Route path="/consultas" element={<Pokemon />} />
+          {/* <Route path="/diagnosticoIA" element={<ImageAnalyzer/>} /> */}
         </Routes>
       </AuthProvider>
     </Router>

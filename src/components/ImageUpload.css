@@ -1,0 +1,153 @@
+.health_section {
+  padding: 60px 0px;
+}
+
+.health_taital {
+  font-size: 40px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+.health_text {
+  font-size: 18px;
+  text-align: center;
+  color: #333;
+  line-height: 28px;
+  margin-bottom: 30px;
+}
+
+.image_upload_label {
+  cursor: pointer;
+}
+
+.image_main {
+  position: relative;
+  overflow: hidden;
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.image_main:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 16px;
+  padding: 16px 32px;
+  border-radius: 5px;
+}
+
+.expand-button {
+  background-color: #0084b8;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.button {
+  background-color: #00acdc;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.note-textbox {
+  margin-top: 20px;
+}
+
+.note-textbox textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+.expanded-image-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.expanded-image-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.expanded-image-controls .expand-button {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.zoom-controls {
+  margin-top: 20px;
+}
+
+.zoom-controls .zoom-button {
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.expanded-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border: 1px solid #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(${zoomLevel});
+}

@@ -3,11 +3,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import "popper.js/dist/umd/popper";
 import "bootstrap/dist/js/bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { AuthContext, Logout } from "./AuthContext";
+import { AuthContext } from "./AuthContext";
 
 
 const MyComponent = () => {
-  const { Logout } = useContext(AuthContext);
+  const { Logout, User_ID } = useContext(AuthContext);
   // Función para obtener el valor de una cookie por su nombre
   const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
@@ -147,11 +147,16 @@ const MyComponent = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/paciente">
+                  <a className="nav-link" href="/registrar">
                     Registro
                   </a>
                 </li>
-                <li className="nav-item dropdown">
+                <li className="nav-item">
+                  <a className="nav-link" href="/diagnosticoIA">
+                    DiagnosticoIA
+                  </a>
+                </li>
+                {/* <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle"
                     href="#"
@@ -163,7 +168,7 @@ const MyComponent = () => {
                   </a>
                   <ul className="dropdown-menu">
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item" href="/diagnosticoIA">
                         Automático
                       </a>
                     </li>
@@ -196,21 +201,16 @@ const MyComponent = () => {
                       </ul>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <a className="nav-link" href="/consultas">
                     Consultas
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Reporte
-                  </a>
-                </li>
-                <li className="nav-item">
                   {isLoggedIn ? (
                     <>
-                      <a className="nav-link" href="#" onClick={handleLogout}>
+                      <a className="nav-link" href="/" onClick={handleLogout}>
                         Logout 
                       </a>
                       
@@ -223,6 +223,18 @@ const MyComponent = () => {
                 </li>
                 <li className="nav-item">
                 <a className="nav-link"> {username}</a>
+                </li>
+                <li className="nav-item">
+                  {isLoggedIn & User_ID == 1 ? (
+                    <>
+                      <a className="nav-link" href="/registroUsuario">
+                        Registrar usuario 
+                      </a>                      
+                    </>
+                  ) : (
+                    <>
+                    </>
+                  )}
                 </li>
               </ul>
             </div>

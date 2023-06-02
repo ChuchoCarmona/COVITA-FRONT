@@ -12,20 +12,23 @@ const LoginForm = () => {
     // Llama a la función Login del contexto y pasa el nombre de usuario y contraseña como parámetros
     Login(username, password);
   };
-  const { isCheck } = useContext(AuthContext);
+  const { isCheck, User_ID } = useContext(AuthContext);
 
   return (
     <body>
       <div className="contact_section layout_padding">
         <div className="container">
           <h1 className="contact_taital">Que hacemos</h1>
+          
           <div className="news_section_2">
             <div className="row">
               <div className="col-md-6">
+              <h4 className="health_text"> Sistema de detección de COVID-19 en imagenes radiológicas mediante IA</h4>
                 <div className="icon_main">
                   <div className="icon_7">
                     <img src="images/icon-7.png" alt="Icon 7" />
                   </div>
+                  
                   <h4 className="diabetes_text">Pruebas COVID-19 rápidas</h4>
                 </div>
                 <div className="icon_main">
@@ -86,7 +89,7 @@ const LoginForm = () => {
                     <Button variant="primary" type="submit">
                       Login
                     </Button>
-
+                    {User_ID === 1 ? (
                     <Button
                       className="btn-space"
                       variant="secondary"
@@ -95,6 +98,9 @@ const LoginForm = () => {
                     >
                       Registrar
                     </Button>
+                    ) : (
+                      <></>
+                    )}
                   </Form>
                   <br />
                 </div>

@@ -5,7 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 
 // const { Formik } = formik;
 
@@ -21,17 +21,17 @@ const schema = yup.object().shape({
 });
 
 function Paciente() {
-  const { handleSubmit } = useForm();
+  // const { handleSubmit } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
+  // // const onSubmit = handleSubmit((data) => {
+  //   console.log(data);
+  // });
 
   return (
     <body>
       <Formik
         validationSchema={schema}
-        onSubmit={onSubmit}
+        // onSubmit={onSubmit}
         initialValues={{
           firstName: "Mark",
           lastName: "Otto",

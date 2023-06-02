@@ -41,27 +41,29 @@ function Inicio() {
                     <span style={{ color: "#2596be" }}>ITA</span>
                   </h1>
                   <p className="banner_text">
-                    Sistema para la deteccion de COVID-19 en imagenes radiológicas
+                    Sistema de detección de COVID-19 en imagenes radiológicas mediante IA
                   </p>
                   
                   <div className="btn_main">
                   {isLoggedIn ? (
                     <>
-                    <div className="more_bt">
-                      <a href="/login">Hola</a>
+                    <div className="contact_bt more_bt">
+                      <a href="/registrar">Registrar un paciente</a>
+                    </div>
+                    
+                    <div className="contact_bt more_bt">
+                      <a href="/diagnosticoIA"> Inciar Diagnóstico </a>
                     </div>
                     </>
                   ):(
                     <>
-                    <div className="more_bt">
-                      <a href="/login">Inciar sesion</a>
+                    <div className=" more_bt">
+                      <a href="/login"> Iniciar sesión</a>
                     </div>
                     </>
                   )}
 
-                    <div className="contact_bt">
-                      <a href="/registrar">Registrar un paciente</a>
-                    </div>
+                    
                   </div>
                 </div>
                 <div className="col-md-6" style={{marginTop:'30px'}}>
